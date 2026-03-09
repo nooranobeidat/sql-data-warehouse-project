@@ -1,1 +1,16 @@
+/*
+=======================================================
+create Databases
+=======================================================
+Scripts purpose:
+this scripts creates a new 3 databases named dwh_bronze,dwh_silver,dwh_gold
+after  checking if it already exists.
+if the database exists, its dropped and recreated  
+
+Warrning:
+running this script will drop the entire   dwh_,database if exists.
+all data in the database will prementaly deleted. proceed with caution 
+and ensure you have proper backups before running script.
+*/
+
 
