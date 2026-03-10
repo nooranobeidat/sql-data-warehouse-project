@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS silver;
+CREATE DATABASE IF NOT EXISTS dwh_silver;
 
-DROP TABLE IF EXISTS silver.subjects_clean;
+DROP TABLE IF EXISTS dwh_silver.subjects_clean;
 
-CREATE TABLE silver.subjects_clean AS
+CREATE TABLE dwh_silver.subjects_clean AS
 SELECT
     id AS subject_id,
     semester_id,
@@ -17,10 +17,10 @@ SELECT
     created_at AS subject_created_at,
     updated_at AS subject_updated_at,
     DATE(created_at) AS report_date
-FROM bronze.subjects
+FROM dwh_bronze.subjects
 WHERE deleted_at IS NULL;
 
-ALTER TABLE silver.subjects_clean
+ALTER TABLE dwh_silver.subjects_clean
     ADD INDEX idx_subjects_clean_subject_id (subject_id),
     ADD INDEX idx_subjects_clean_report_date (report_date),
     ADD INDEX idx_subjects_clean_semester_id (semester_id),

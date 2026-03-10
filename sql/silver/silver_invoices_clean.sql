@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS silver;
+CREATE DATABASE IF NOT EXISTS dwh_silver;
 
-DROP TABLE IF EXISTS silver.invoices_clean;
+DROP TABLE IF EXISTS dwh_silver.invoices_clean;
 
-CREATE TABLE silver.invoices_clean AS
+CREATE TABLE dwh_silver.invoices_clean AS
 SELECT
     id AS invoice_id,
     order_id,
@@ -26,10 +26,10 @@ SELECT
     created_at AS invoice_created_at,
     updated_at AS invoice_updated_at,
     DATE(created_at) AS report_date
-FROM bronze.invoices
+FROM dwh_bronze.invoices
 WHERE deleted_at IS NULL;
 
-ALTER TABLE silver.invoices_clean
+ALTER TABLE dwh_silver.invoices_clean
     ADD INDEX idx_invoices_clean_invoice_id (invoice_id),
     ADD INDEX idx_invoices_clean_report_date (report_date),
     ADD INDEX idx_invoices_clean_order_id (order_id),

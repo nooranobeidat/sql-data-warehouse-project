@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS silver;
+CREATE DATABASE IF NOT EXISTS dwh_silver;
 
-DROP TABLE IF EXISTS silver.files_clean;
+DROP TABLE IF EXISTS dwh_silver.files_clean;
 
-CREATE TABLE silver.files_clean AS
+CREATE TABLE dwh_silver.files_clean AS
 SELECT
     id AS file_id,
     subject_id,
@@ -26,10 +26,10 @@ SELECT
     created_at AS file_created_at,
     updated_at AS file_updated_at,
     DATE(created_at) AS report_date
-FROM bronze.files
+FROM dwh_bronze.files
 WHERE deleted_at IS NULL;
 
-ALTER TABLE silver.files_clean
+ALTER TABLE dwh_silver.files_clean
     ADD INDEX idx_files_clean_file_id (file_id),
     ADD INDEX idx_files_clean_report_date (report_date),
     ADD INDEX idx_files_clean_subject_id (subject_id),

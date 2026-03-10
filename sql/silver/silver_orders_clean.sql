@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS silver;
+CREATE DATABASE IF NOT EXISTS dwh_silver;
 
-DROP TABLE IF EXISTS silver.orders_clean;
+DROP TABLE IF EXISTS dwh_silver.orders_clean;
 
-CREATE TABLE silver.orders_clean AS
+CREATE TABLE dwh_silver.orders_clean AS
 SELECT
     id AS order_id,
     user_id,
@@ -36,11 +36,11 @@ SELECT
     created_at AS order_created_at,
     updated_at AS order_updated_at,
     DATE(created_at) AS report_date
-FROM bronze.orders
+FROM dwh_bronze.orders
 WHERE deleted_at IS NULL
   AND status NOT IN (0, 4);
 
-ALTER TABLE silver.orders_clean
+ALTER TABLE dwh_silver.orders_clean
     ADD INDEX idx_orders_clean_order_id (order_id),
     ADD INDEX idx_orders_clean_report_date (report_date),
     ADD INDEX idx_orders_clean_user_id (user_id),

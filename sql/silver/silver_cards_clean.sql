@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS silver;
+CREATE DATABASE IF NOT EXISTS dwh_silver;
 
-DROP TABLE IF EXISTS silver.cards_clean;
+DROP TABLE IF EXISTS dwh_silver.cards_clean;
 
-CREATE TABLE silver.cards_clean AS
+CREATE TABLE dwh_silver.cards_clean AS
 SELECT
     id AS card_id,
     course_id,
@@ -27,10 +27,10 @@ SELECT
     created_at AS card_created_at,
     updated_at AS card_updated_at,
     DATE(created_at) AS report_date
-FROM bronze.cards
+FROM dwh_bronze.cards
 WHERE deleted_at IS NULL;
 
-ALTER TABLE silver.cards_clean
+ALTER TABLE dwh_silver.cards_clean
     ADD INDEX idx_cards_clean_card_id (card_id),
     ADD INDEX idx_cards_clean_report_date (report_date),
     ADD INDEX idx_cards_clean_course_id (course_id),

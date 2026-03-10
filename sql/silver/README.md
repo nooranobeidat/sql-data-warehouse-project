@@ -4,16 +4,16 @@ This folder contains the Silver-layer build scripts for the warehouse.
 
 ## Assumptions
 
-- Source tables live in the `bronze` MySQL database.
-- Target tables are created in the `silver` MySQL database.
+- Source tables live in the `dwh_bronze` MySQL database.
+- Target tables are created in the `dwh_silver` MySQL database.
 - Each script rebuilds one Silver table from its Bronze source.
 
 ## Important MySQL Note
 
 MySQL does not support `CREATE OR REPLACE TABLE`, so each script uses:
 
-1. `DROP TABLE IF EXISTS silver.<table_name>`
-2. `CREATE TABLE silver.<table_name> AS SELECT ...`
+1. `DROP TABLE IF EXISTS dwh_silver.<table_name>`
+2. `CREATE TABLE dwh_silver.<table_name> AS SELECT ...`
 3. `ALTER TABLE ... ADD INDEX ...`
 
 ## Files
@@ -49,26 +49,19 @@ Get-ChildItem .\sql\silver\*.sql | Sort-Object Name | ForEach-Object {
 }
 ```
 
-## If Your Current Bronze Database Is `dwh_bronze`
-
-The scripts currently reference `bronze.<table>` to match the Silver-layer design.
-
-If your local raw tables are still in `dwh_bronze`, either:
-
-- rename or copy the raw tables into a `bronze` database, or
-- replace `bronze.` with `dwh_bronze.` before execution
+The scripts reference `dwh_bronze.<table>` as the source and build outputs in `dwh_silver.<table>`.
 
 ## Output
 
-The scripts create these target tables in `silver`:
+The scripts create these target tables in `dwh_silver`:
 
-- `silver.orders_clean`
-- `silver.invoices_clean`
-- `silver.users_clean`
-- `silver.courses_clean`
-- `silver.units_clean`
-- `silver.unit_classes_clean`
-- `silver.user_courses_clean`
-- `silver.subjects_clean`
-- `silver.cards_clean`
-- `silver.files_clean`
+- `dwh_silver.orders_clean`
+- `dwh_silver.invoices_clean`
+- `dwh_silver.users_clean`
+- `dwh_silver.courses_clean`
+- `dwh_silver.units_clean`
+- `dwh_silver.unit_classes_clean`
+- `dwh_silver.user_courses_clean`
+- `dwh_silver.subjects_clean`
+- `dwh_silver.cards_clean`
+- `dwh_silver.files_clean`

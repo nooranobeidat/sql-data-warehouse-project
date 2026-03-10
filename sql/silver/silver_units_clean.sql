@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS silver;
+CREATE DATABASE IF NOT EXISTS dwh_silver;
 
-DROP TABLE IF EXISTS silver.units_clean;
+DROP TABLE IF EXISTS dwh_silver.units_clean;
 
-CREATE TABLE silver.units_clean AS
+CREATE TABLE dwh_silver.units_clean AS
 SELECT
     id AS unit_id,
     course_id,
@@ -12,10 +12,10 @@ SELECT
     created_at AS unit_created_at,
     updated_at AS unit_updated_at,
     DATE(created_at) AS report_date
-FROM bronze.units
+FROM dwh_bronze.units
 WHERE deleted_at IS NULL;
 
-ALTER TABLE silver.units_clean
+ALTER TABLE dwh_silver.units_clean
     ADD INDEX idx_units_clean_unit_id (unit_id),
     ADD INDEX idx_units_clean_report_date (report_date),
     ADD INDEX idx_units_clean_course_id (course_id);

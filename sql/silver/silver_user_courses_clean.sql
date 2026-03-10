@@ -1,8 +1,8 @@
-CREATE DATABASE IF NOT EXISTS silver;
+CREATE DATABASE IF NOT EXISTS dwh_silver;
 
-DROP TABLE IF EXISTS silver.user_courses_clean;
+DROP TABLE IF EXISTS dwh_silver.user_courses_clean;
 
-CREATE TABLE silver.user_courses_clean AS
+CREATE TABLE dwh_silver.user_courses_clean AS
 SELECT
     id AS user_course_id,
     user_id,
@@ -24,10 +24,10 @@ SELECT
     created_at AS enrollment_created_at,
     updated_at AS enrollment_updated_at,
     DATE(created_at) AS report_date
-FROM bronze.user_courses
+FROM dwh_bronze.user_courses
 WHERE deleted_at IS NULL;
 
-ALTER TABLE silver.user_courses_clean
+ALTER TABLE dwh_silver.user_courses_clean
     ADD INDEX idx_user_courses_clean_user_course_id (user_course_id),
     ADD INDEX idx_user_courses_clean_report_date (report_date),
     ADD INDEX idx_user_courses_clean_user_id (user_id),
